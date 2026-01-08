@@ -43,7 +43,7 @@ return [
     */
     'strategies' => [
         'uri' => [
-            'prefix' => '',              // Empty - Laravel 12 adds /api prefix in bootstrap/app.php
+            'prefix' => 'api',           // API prefix for versioned routes
             'pattern' => 'v{version}',   // v1, v2, etc.
         ],
         'header' => [
