@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
 
 return [

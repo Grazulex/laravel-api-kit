@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
@@ -31,6 +33,9 @@ trait ApiResponse
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
+    /**
+     * @param  array<string, mixed>  $errors
+     */
     protected function error(
         string $message = 'Error',
         int $code = Response::HTTP_BAD_REQUEST,
@@ -41,7 +46,7 @@ trait ApiResponse
             'message' => $message,
         ];
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $response['errors'] = $errors;
         }
 
@@ -63,6 +68,9 @@ trait ApiResponse
         return $this->error($message, Response::HTTP_FORBIDDEN);
     }
 
+    /**
+     * @param  array<string, mixed>  $errors
+     */
     protected function validationError(array $errors, string $message = 'Validation failed'): JsonResponse
     {
         return $this->error($message, Response::HTTP_UNPROCESSABLE_ENTITY, $errors);

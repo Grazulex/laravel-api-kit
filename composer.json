@@ -16,13 +16,16 @@
         "spatie/laravel-query-builder": "^6.0"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.7",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-laravel": "^4.0"
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "rector/rector": "^2.2"
     },
     "autoload": {
         "psr-4": {
@@ -37,9 +40,25 @@
         }
     },
     "scripts": {
-        "test": [
+        "lint": [
+            "rector",
+            "pint"
+        ],
+        "test:lint": [
+            "pint --test",
+            "rector --dry-run"
+        ],
+        "test:types": [
+            "phpstan"
+        ],
+        "test:unit": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

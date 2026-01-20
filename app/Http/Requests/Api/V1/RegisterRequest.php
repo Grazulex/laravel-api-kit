@@ -1,10 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+/**
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ */
+final class RegisterRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -12,7 +20,7 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

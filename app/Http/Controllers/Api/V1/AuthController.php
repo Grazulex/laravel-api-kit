@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\ApiController;
@@ -11,11 +13,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends ApiController
+final class AuthController extends ApiController
 {
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create([
+        $user = User::query()->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -31,7 +33,7 @@ class AuthController extends ApiController
 
     public function login(LoginRequest $request): JsonResponse
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::query()->where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return $this->unauthorized('Invalid credentials');
@@ -47,7 +49,9 @@ class AuthController extends ApiController
 
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        /** @var User $user */
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
 
         return $this->success(message: 'Logged out successfully');
     }
