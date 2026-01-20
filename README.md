@@ -15,6 +15,7 @@ A production-ready, API-only Laravel 12 starter kit following the 2024-2025 REST
 - **Data Objects** - Type-safe DTOs via [spatie/laravel-data](https://github.com/spatie/laravel-data)
 - **Auto Documentation** - Zero-annotation OpenAPI 3.1 via [dedoc/scramble](https://github.com/dedoc/scramble)
 - **Modern Testing** - Pest PHP with Laravel HTTP testing
+- **Code Quality** - PHPStan (max level), Rector, and Pint with strict rules
 - **Rate Limiting** - Configurable per-route rate limiters
 - **Standardized Responses** - Consistent JSON response format
 
@@ -435,15 +436,60 @@ it('requires authentication', function () {
 });
 ```
 
+## Code Quality
+
+This kit includes strict code quality tools configured following [nunomaduro/laravel-starter-kit](https://github.com/nunomaduro/laravel-starter-kit) standards.
+
+### Tools
+
+| Tool | Purpose | Config |
+|------|---------|--------|
+| [PHPStan](https://phpstan.org/) + [Larastan](https://github.com/larastan/larastan) | Static analysis (level max) | `phpstan.neon` |
+| [Rector](https://getrector.com/) | Automated refactoring | `rector.php` |
+| [Pint](https://laravel.com/docs/pint) | Code style (strict rules) | `pint.json` |
+
+### Composer Scripts
+
+```bash
+# Apply all fixes (Rector + Pint)
+composer lint
+
+# Check without fixing (CI mode)
+composer test:lint
+
+# Static analysis only
+composer test:types
+
+# Unit tests only
+composer test:unit
+
+# Full test suite (lint + types + unit)
+composer test
+```
+
+### With Docker
+
+```bash
+docker compose exec app composer lint
+docker compose exec app composer test
+```
+
+### Strict Rules Applied
+
+- `declare(strict_types=1)` on all files
+- `final` classes by default
+- Type declarations enforced
+- Dead code removal
+- Early returns
+- Strict comparisons
+
+### GitHub Actions
+
+Tests run automatically on push/PR to `main` via `.github/workflows/tests.yml`.
+
 ## Development Commands
 
 ```bash
-# Code formatting (Laravel Pint)
-docker compose run --rm app ./vendor/bin/pint
-
-# Check code style without fixing
-docker compose run --rm app ./vendor/bin/pint --test
-
 # List all routes
 docker compose run --rm app php artisan route:list
 
