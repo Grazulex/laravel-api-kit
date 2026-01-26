@@ -18,12 +18,12 @@ describe('Email Verification', function (): void {
         $token = $user->createToken('test-token')->plainTextToken;
 
         $verificationUrl = URL::temporarySignedRoute(
-            'api.v1.verification.verify',
+            'verification.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => sha1($user->email)]
         );
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson($verificationUrl);
 
         $response->assertStatus(200)
@@ -43,12 +43,12 @@ describe('Email Verification', function (): void {
         $token = $user->createToken('test-token')->plainTextToken;
 
         $verificationUrl = URL::temporarySignedRoute(
-            'api.v1.verification.verify',
+            'verification.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => sha1($user->email)]
         );
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson($verificationUrl);
 
         $response->assertStatus(200)
@@ -62,7 +62,7 @@ describe('Email Verification', function (): void {
         $user = User::factory()->create(['email_verified_at' => null]);
 
         $verificationUrl = URL::temporarySignedRoute(
-            'api.v1.verification.verify',
+            'verification.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => sha1($user->email)]
         );
@@ -77,7 +77,7 @@ describe('Email Verification', function (): void {
         $token = $user->createToken('test-token')->plainTextToken;
 
         // Invalid URL without signature
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson("/api/v1/email/verify/{$user->id}/invalid-hash");
 
         $response->assertStatus(403);
@@ -89,7 +89,7 @@ describe('Resend Verification Email', function (): void {
         $user = User::factory()->create(['email_verified_at' => null]);
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/v1/email/resend', [
                 'email' => $user->email,
             ]);
@@ -107,7 +107,7 @@ describe('Resend Verification Email', function (): void {
         ]);
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/v1/email/resend', [
                 'email' => $user->email,
             ]);
@@ -123,7 +123,7 @@ describe('Resend Verification Email', function (): void {
         $user = User::factory()->create();
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/v1/email/resend', [
                 'email' => 'nonexistent@example.com',
             ]);
@@ -147,7 +147,7 @@ describe('Resend Verification Email', function (): void {
 
         // Make 7 requests (limit is 6 per minute)
         for ($i = 0; $i < 7; $i++) {
-            $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            $response = $this->withHeader('Authorization', 'Bearer ' . $token)
                 ->postJson('/api/v1/email/resend', [
                     'email' => $user->email,
                 ]);

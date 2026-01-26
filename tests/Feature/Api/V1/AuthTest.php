@@ -27,7 +27,7 @@ describe('Registration', function (): void {
             ])
             ->assertJson([
                 'success' => true,
-                'message' => 'User registered successfully',
+                'message' => 'User registered successfully. Please check your email to verify your account.',
             ]);
 
         $this->assertDatabaseHas('users', [
@@ -117,7 +117,7 @@ describe('Logout', function (): void {
         $user = User::factory()->create();
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/v1/logout');
 
         $response->assertStatus(200)
@@ -139,7 +139,7 @@ describe('Me', function (): void {
         $user = User::factory()->create();
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->getJson('/api/v1/me');
 
         $response->assertStatus(200)
