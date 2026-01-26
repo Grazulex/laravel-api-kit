@@ -149,12 +149,16 @@ curl -X POST http://localhost:8080/api/v1/logout \
 
 ### Version 1 (`/api/v1`)
 
-| Method | Endpoint    | Auth | Description              | Rate Limit |
-|--------|-------------|------|--------------------------|------------|
-| POST   | /register   | No   | Register new user        | 5/min      |
-| POST   | /login      | No   | Get authentication token | 5/min      |
-| POST   | /logout     | Yes  | Revoke current token     | 60/min     |
-| GET    | /me         | Yes  | Get current user profile | 60/min     |
+| Method | Endpoint                     | Auth | Description                   | Rate Limit |
+|--------|------------------------------|------|-------------------------------|------------|
+| POST   | /register                    | No   | Register new user             | 5/min      |
+| POST   | /login                       | No   | Get authentication token      | 5/min      |
+| POST   | /logout                      | Yes  | Revoke current token          | 120/min    |
+| GET    | /me                          | Yes  | Get current user profile      | 120/min    |
+| POST   | /email/verify/{id}/{hash}    | Yes  | Verify email address          | 120/min    |
+| POST   | /email/resend                | Yes  | Resend verification email     | 6/min      |
+| POST   | /forgot-password             | No   | Request password reset link   | 6/min      |
+| POST   | /reset-password              | No   | Reset password with token     | 6/min      |
 
 ## Response Format
 
