@@ -14,7 +14,7 @@ final class ForceJsonResponse
     /**
      * Ensure all responses are JSON and set proper Accept header.
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): mixed
     {
         $request->headers->set('Accept', 'application/json');
 

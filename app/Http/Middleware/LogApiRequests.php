@@ -14,11 +14,16 @@ final class LogApiRequests
     /**
      * Log API requests for debugging and monitoring.
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): mixed
     {
         $startTime = microtime(true);
 
         $response = $next($request);
+
+        // Ensure we have a Response object
+        if (! $response instanceof Response) {
+            return $response;
+        }
 
         $duration = round((microtime(true) - $startTime) * 1000, 2);
 
@@ -37,7 +42,7 @@ final class LogApiRequests
         }
 
         // Add performance header
-        $response->headers->set('X-Response-Time', "{$duration}ms");
+        $response->headers->set('X-Response-Time', $duration.'ms');
 
         return $response;
     }

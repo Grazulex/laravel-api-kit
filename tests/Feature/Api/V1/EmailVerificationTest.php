@@ -78,7 +78,7 @@ describe('Email Verification', function (): void {
 
         // Invalid URL without signature
         $response = $this->withHeader('Authorization', 'Bearer '.$token)
-            ->postJson("/api/v1/email/verify/{$user->id}/invalid-hash");
+            ->postJson(sprintf('/api/v1/email/verify/%d/invalid-hash', $user->id));
 
         $response->assertStatus(403);
     });
