@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "dedoc/scramble": "^0.12|^0.13",
+        "dedoc/scramble": "^0.13.22",
         "grazulex/laravel-apiroute": "^2.0",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
