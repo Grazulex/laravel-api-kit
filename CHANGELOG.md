@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.1](https://github.com/Grazulex/laravel-api-kit/releases/tag/v2.5.1) (2026-10-23)
+
+### Security
+
+- Bump `dedoc/scramble` to `^0.13.22` to fix a critical RCE in documentation endpoints (CVE-2026-44262) (#26)
+- Use `PreventRequestForgery` instead of the deprecated `ValidateCsrfToken` in the Sanctum config (#26)
+- Update all Composer dependencies within existing constraints: `composer audit` now reports no advisories (was 41: laravel/framework, guzzlehttp/guzzle, league/commonmark, symfony/*…) (#26)
+
 ## [2.5.0](https://github.com/Grazulex/laravel-api-kit/releases/tag/v2.5.0) (2026-10-08)
 
 ### Changed
